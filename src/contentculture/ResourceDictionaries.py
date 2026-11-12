@@ -9,9 +9,3 @@ class Media(TypedDict):
     Rating=int
     Genre=str
     Commentary=str
-
-class Lists(TypedDict):
-    Id=int
-    Medias=list[Media]
-    User_id=int
-    Decription=str
