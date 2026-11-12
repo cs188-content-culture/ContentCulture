@@ -1,0 +1,37 @@
+<!-- Create List Modal -->
+<div class="modal fade" id="createListModal" tabindex="-1" aria-labelledby="createListModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal header -->
+            <div class="modal-header">
+                <h5 class="modal-title" id="createListModalLabel">Create New List</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="createListForm">
+
+                    <div class="mb-3">
+                        <label for="listName" class="form-label">List Name</label>
+                        <input type="text" class="form-control" id="listName" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="listDescription" class="form-label">Description (optional)</label>
+                        <textarea class="form-control" id="listDescription" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create List</button>
+
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
