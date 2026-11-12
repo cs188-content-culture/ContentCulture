@@ -1,45 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Set the charset -->
-    <meta charset="utf-8" />
-    <!-- Metadata to tell the browser that this document is reponsive -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Hello</title>
-    <!-- Include boostrap 5, copied from their website:  https://getbootstrap.com/docs/5.3/getting-started/introduction/-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
-    <main>
-      <!-- Simple jinja templating. In your render_html, you can do variable substitution here. -->
-      <h1>Hello {{ name }}!</h1>
 
-      <!-- Javascript demonstration -->
+<head>
+  <!-- Set the charset -->
+  <meta charset="utf-8" />
+  <!-- Metadata to tell the browser that this document is reponsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hello</title>
+  <!-- Include boostrap 5, copied from their website:  https://getbootstrap.com/docs/5.3/getting-started/introduction/-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+  <!-- Our custom CSS for Content Culture -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Content Culture</a>
+
       <div>
-        <p>Click the button to increment the counter:</p>
-        <!-- The btn and btn-primary classes are from bootstrap -->
-        <button id="incrementButton" class="btn btn-primary">
-          Increment Counter
+        <!-- Open existing login modal -->
+        <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+          Log In
         </button>
-        <p>Counter: <span id="counter">0</span></p>
-      </div>
-    </main>
 
-    <!-- Include the javascript necessary for bootstrap to run. 
+        <!-- Open existing registration modal -->
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
+          Register
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+
+    <!-- Welcome section -->
+    <section class="text-center py-5">
+      <h1>Your media. Your lists. Your culture.</h1>
+      <p class="lead">
+        Discover movies, TV shows, books, and video games.
+        Create lists, rate your favorites, and share your thoughts.
+      </p>
+    </section>
+
+    <!-- Trending section -->
+    <section class="mb-5">
+      <h2 class="mb-4">Trending Media</h2>
+
+      <div class="row g-3">
+
+        <div class="col-6 col-md-3">
+          <div class="media-card">
+            <div class="media-placeholder">Movie</div>
+            <h5>Interstellar</h5>
+            <p>2014</p>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="media-card">
+            <div class="media-placeholder">Book</div>
+            <h5>The Hunger Games</h5>
+            <p>2008</p>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="media-card">
+            <div class="media-placeholder">Game</div>
+            <h5>Stardew Valley</h5>
+            <p>2016</p>
+          </div>
+        </div>
+
+        <div class="col-6 col-md-3">
+          <div class="media-card">
+            <div class="media-placeholder">TV Show</div>
+            <h5>Stranger Things</h5>
+            <p>2016</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Login and registration popups -->
+  {% include "login_modal.html" %}
+  {% include "register_modal.html" %}
+
+  <!-- Include the javascript necessary for bootstrap to run. 
      Generally speaking, we include the javascript last, outside of head. This makes the web page
      load faster the first time, as it doesn't have to download the javascript -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
 
-    <!-- Include our  -->
-    <script src="{{ url_for('static', filename='js/button.js') }}"></script>
-  </body>
+  <!-- Include our  -->
+  <script src="{{ url_for('static', filename='js/button.js') }}"></script>
+</body>
+
 </html>
