@@ -1,0 +1,64 @@
+/* Content Culture homepage styling */
+
+
+/* General page styling */
+body {
+    background-color: #14181c;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+/* For the login/register pop up*/
+.modal-content {
+    color: #212529;
+}
+
+.modal-content .form-label,
+.modal-content .modal-title {
+    color: #212529;
+}
+
+.modal-content .form-control {
+    color: #212529;
+}
+
+/* Welcome section */
+h1 {
+    font-weight: bold;
+}
+
+.lead {
+    color: #b0b8c1;
+}
+
+/* Trending media cards */
+.media-card {
+    background-color: #242c34;
+    padding: 15px;
+    border-radius: 8px;
+    height: 100%;
+}
+
+.media-card h5 {
+    margin-top: 12px;
+    font-size: 16px;
+}
+
+.media-card p {
+    color: #b0b8c1;
+    font-size: 14px;
+}
+
+/* Temporary poster placeholders */
+.media-placeholder {
+    background-color: #394957;
+    height: 220px;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+    font-weight: bold;
+}
