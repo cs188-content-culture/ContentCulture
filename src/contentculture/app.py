@@ -1,11 +1,17 @@
-from flask import Flask, render_template
+from dotenv import find_dotenv, load_dotenv
+from flask import Flask, abort, render_template, request, session, jsonify
+from datetime import datetime
+from contentculture import auth, db
+from contentculture._constants import SECRET_ENV_FILE
 
 
 def create_app():
+    load_dotenv(find_dotenv(SECRET_ENV_FILE))
     app = Flask(__name__)
+    db.setup_for_app(app)
+    auth.setup_auth(app)
     setup_routes(app)
     return app
-
 
 def index():
     return render_template("index.html", name="Flask Bootstrap5")
