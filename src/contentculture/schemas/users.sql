@@ -2,7 +2,8 @@ IF OBJECT_ID(N'dbo.Users', N'U') IS NULL
 CREATE TABLE dbo.Users (
   userid INT IDENTITY(1,1) PRIMARY KEY,
   username VARCHAR(50) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL
+  password VARCHAR(50) NOT NULL,
+  displayname VARCHAR(50) NOT NULL
 );
 
 IF OBJECT_ID(N'dbo.Media', N'U') IS NULL
