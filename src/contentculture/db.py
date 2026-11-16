@@ -10,12 +10,11 @@
 # request ends. You never need to open or close a connection yourself.
 
 import os
-
+import os.path
 import mssql_python
 from flask import Flask, g
 
-from ._constants import CONNECTION_STRING_VARIABLE
-
+from ._constants import CONNECTION_STRING_VARIABLE, PACKAGE_ROOT
 
 def get_connection_string() -> str:
     """Read the connection string from the environment"""
