@@ -10,12 +10,11 @@
 # request ends. You never need to open or close a connection yourself.
 
 import os
-
+import os.path
 import mssql_python
 from flask import Flask, g
 
-from ._constants import CONNECTION_STRING_VARIABLE
-
+from ._constants import CONNECTION_STRING_VARIABLE, PACKAGE_ROOT
 
 def get_connection_string() -> str:
     """Read the connection string from the environment"""
@@ -65,6 +64,14 @@ class Database:
                 return False
         self.connection.commit()
         return True
+
+    def get_login_info(self, username: str):
+        with self.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM Users WHERE username = ?",
+                (username,)
+            )
+            row = cursor.fetchone()
+        return row if row else None
 
 def get_db() -> Database:
     """Return this request's Database, connecting on first use."""

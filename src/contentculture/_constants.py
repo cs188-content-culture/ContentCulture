@@ -8,7 +8,8 @@
 #    from azure_web_app._constants import MAX_USERNAME_LENGTH
 """Constants used throughout the app"""
 
-import re
+import re as _re
+import os.path as _path
 
 # ---------------------------------------------------------------------------
 # Secrets and configuration
@@ -32,9 +33,11 @@ MIN_PASSWORD_LENGTH = 8
 # anyone can skip our JavaScript and send a request straight to /register
 # (try it with Postman!). Client-side validation is a convenience for the user.
 # Server-side validation is the one that actually protects you.
-USERNAME_PATTERN = re.compile(rf"[A-Za-z0-9]{{1,{MAX_USERNAME_LENGTH}}}")
+USERNAME_PATTERN = _re.compile(rf"[A-Za-z0-9]{{1,{MAX_USERNAME_LENGTH}}}")
 # \x21-\x7E is the range of printable ASCII characters from ! to ~ (no spaces).
-PASSWORD_PATTERN = re.compile(rf"[\x21-\x7E]{{{MIN_PASSWORD_LENGTH},}}")
+PASSWORD_PATTERN = _re.compile(rf"[\x21-\x7E]{{{MIN_PASSWORD_LENGTH},}}")
 
 # Login uses the same message for "no such user" and "wrong password".
 BAD_LOGIN_MESSAGE = "Incorrect username or password"
+
+PACKAGE_ROOT = _path.abspath(_path.join(_path.dirname(__file__)))
