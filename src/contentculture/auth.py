@@ -1,4 +1,3 @@
-# This file should be placed in src/azure_web_app, and should be called auth.py
 """User registration and login endpoints.
 
 Register is complete. Read through it carefully: the login endpoint you write
@@ -8,7 +7,7 @@ Notice that there's no SQL in this file. Endpoints decide what should happen;
 the Database class in db.py does the talking to the database.
 """
 
-from flask import Flask, request
+from flask import Flask, request, make_response
 from flask_bcrypt import check_password_hash, generate_password_hash
 from flask_restful import Api, Resource
 
@@ -20,7 +19,6 @@ from ._constants import (
     USERNAME_PATTERN,
 )
 from .db import get_db
-
 
 def get_json_body() -> dict:
     """Return the request's JSON body, or an empty dict if there isn't a valid one."""
@@ -100,10 +98,36 @@ class Register(Resource):
 
         return {"message": "User created successfully", "displayName": display_name}, 201
 
-# class Login(Resource):
-#     def post(self):
-#         ...
+class Login(Resource):
+     def post(self):
+        data = get_json_body()
+        username = data.get("username")
+        password = data.get("password")
 
+        if not username or not password:
+            return {"message": BAD_LOGIN_MESSAGE}, 401
+
+        db = get_db()
+        db_data = db.get_login_info(username)
+
+        if db_data is None:
+            return {"message": BAD_LOGIN_MESSAGE}, 401
+
+        user_id = db_data[0]
+        hashed_pwd = db_data[2]
+        display_name = db_data[3]
+
+        valid = hashed_pwd is not None and check_password_hash(
+            hashed_pwd, password
+        )
+
+        if not valid:
+            return{"message": BAD_LOGIN_MESSAGE}, 401
+
+        success_message = f"Welcome back, {display_name}!"
+        response = make_response({"message": success_message, "displayName": display_name}, 200)
+
+        return response
 
 def setup_auth(app: Flask) -> None:
     """Register the authentication endpoints with the app. Should be called when first creating the flask app"""
@@ -111,5 +135,4 @@ def setup_auth(app: Flask) -> None:
     # that nothing happens just because someone imported this module.
     api = Api(app)
     api.add_resource(Register, "/register")
-    # TODO: Once you implement Login
-    # api.add_resource(Login, "/login")
+    api.add_resource(Login, "/login")

@@ -65,6 +65,14 @@ class Database:
         self.connection.commit()
         return True
 
+    def get_login_info(self, username: str):
+        with self.connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM Users WHERE username = ?",
+                (username,)
+            )
+            row = cursor.fetchone()
+        return row if row else None
+
 def get_db() -> Database:
     """Return this request's Database, connecting on first use."""
     # `g` is Flask's per-request storage (remember it from the API activity?).
