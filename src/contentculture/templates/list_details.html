@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>List Details - Content Culture</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Our custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Content Culture</a>
+
+            <div>
+                <a href="/" class="btn btn-outline-light me-2">Home</a>
+                <a href="/lists" class="btn btn-primary">My Lists</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="container py-5">
+
+        <a href="/lists" class="btn btn-outline-light mb-4">
+            Back to My Lists
+        </a>
+
+        <!-- List information -->
+        <div class="mb-4">
+            <h1>{{ selected_list.name }}</h1>
+            <p class="lead">{{ selected_list.description }}</p>
+            <p id="mediaCount">{{ selected_list.media|length }} items</p>
+
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addMediaModal">
+                + Add Media
+            </button>
+        </div>
+
+        <!-- Media saved to this list -->
+        <div class="row g-3" id="mediaContainer">
+
+            {% for media in selected_list.media %}
+            <div class="col-md-4">
+                <div class="media-card">
+                    <h5>{{ media.title }}</h5>
+                    <p>{{ media.medium }}</p>
+                    <p>Rating: {{ media.rating }}/5</p>
+                    <p>Commentary: {{ media.commentary }}</p>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+
+    </main>
+
+
+    <!-- Add Media popup -->
+    {% include "add_media_modal.html" %}
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- List Details JavaScript -->
+    <script src="{{ url_for('static', filename='js/list_details.js') }}"></script>
+
+</body>
+
+</html>

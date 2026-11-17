@@ -24,10 +24,100 @@ def show_lists():
     return render_template("lists.html")
 
 
+def show_list_details(list_id):
+    # Sample data for frontend testing
+    # TODO: Replace with database information
+    sample_lists = {
+        1: {
+            "name": "Favorite Horror Movies",
+            "description": "My favorite scary movies.",
+            "media": [
+                {
+                    "title": "The Conjuring",
+                    "medium": "Movie",
+                    "rating": 4,
+                    "commentary": "Really creepy."
+                },
+                {
+                    "title": "Nope",
+                    "medium": "Movie",
+                    "rating": 5,
+                    "commentary": "The best!"
+                },
+                {
+                    "title": "Resident Evil",
+                    "medium": "Movie",
+                    "rating": 5,
+                    "commentary": "One of my favorite horror movies."
+                }
+            ]
+        },
+        2: {
+            "name": "Games I Want to Play",
+            "description": "Games on my wishlist.",
+            "media": [
+                {
+                    "title": "Hollow Knight",
+                    "medium": "Game",
+                    "rating": 5,
+                    "commentary": "I want to explore this game."
+                },
+                {
+                    "title": "Stardew Valley",
+                    "medium": "Game",
+                    "rating": 5,
+                    "commentary": "Looks fun and relaxing."
+                }
+            ]
+        },
+        3: {
+            "name": "Best Books of 2026",
+            "description": "Books I enjoyed this year.",
+            "media": [
+                {
+                    "title": "The Hunger Games",
+                    "medium": "Book",
+                    "rating": 5,
+                    "commentary": "A really interesting story."
+                },
+                {
+                    "title": "Frankenstein",
+                    "medium": "Book",
+                    "rating": 4,
+                    "commentary": "Raises interesting questions."
+                }
+            ]
+        }
+    }
+
+    selected_list = sample_lists.get(list_id)
+
+    if selected_list is None:
+        abort(404)
+
+    return render_template(
+        "list_details.html",
+        selected_list=selected_list
+    )
+
+    # Find the list using its ID
+    selected_list = sample_lists.get(list_id)
+
+    # Show an error if the list doesn't exist
+    if selected_list is None:
+        abort(404)
+
+    return render_template(
+        "list_details.html",
+        selected_list=selected_list
+    )
+
+
 def setup_routes(app):
     app.route("/")(index)
      # Temporary route for frontend testing.
-    app.route("/lists")(show_lists) 
+    app.route("/lists")(show_lists)
+    app.route("/lists/<int:list_id>")(show_list_details) 
 
 def run_app(debug: bool = True) -> None:
     app = create_app()
