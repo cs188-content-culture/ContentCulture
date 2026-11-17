@@ -117,7 +117,7 @@ async function submitRegisterForm(event) {
 	const formData = {
 		username: document.getElementById("registerUsername").value,
 		password: document.getElementById("registerPassword").value,
-		displayName: document.getElementById("registerDisplayName").value,
+		displayname: document.getElementById("registerDisplayName").value,
 	};
 
 	const reply = await postJson("/register", formData);
