@@ -10,9 +10,12 @@ class Media(TypedDict):
     Genre=str
     Commentary=str
 
-class Lists(TypedDict):
-    id=int
-    user_id=int
-    name=str
+class List1(TypedDict):
+    Id=int
+    User_id=int
+    Name=str
     Description=str
-    medias=list[Media]
+    Medias=list[Media]
+
+class Lists(TypedDict):
+    lists=list[List1]
