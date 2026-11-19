@@ -111,6 +111,7 @@ async function submitRegisterForm(event) {
 	isValid = validatedisplay_name("registerdisplay_name") && isValid;
 	if (!isValid) {
 		return false;
+		return false;
 	}
 
 	// The keys here must match what the server reads in Register.post().

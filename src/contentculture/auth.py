@@ -64,13 +64,21 @@ class Register(Resource):
     def post(self):
         data = get_json_body()
 
+<<<<<<< HEAD
         missing_field = find_missing_field(data, ("username", "password", "display_name"))
+=======
+        missing_field = find_missing_field(data, ("username", "password", "displayname"))
+>>>>>>> prod
         if missing_field is not None:
             return {"message": f"Missing required field: {missing_field}"}, 400
 
         username = data["username"]
         password = data["password"]
+<<<<<<< HEAD
         display_name = data["display_name"].strip()
+=======
+        display_name = data["displayname"].strip()
+>>>>>>> prod
 
         # Validate everything we can before touching the database.
         is_valid, message = validate_username(username)
