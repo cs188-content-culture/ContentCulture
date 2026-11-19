@@ -110,7 +110,7 @@ async function submitRegisterForm(event) {
 	isValid = validateUsername("registerUsername") && isValid;
 	isValid = validateDisplayName("registerDisplayName") && isValid;
 	if (!isValid) {
-		return;
+		return false;
 	}
 
 	// The keys here must match what the server reads in Register.post().
@@ -123,13 +123,13 @@ async function submitRegisterForm(event) {
 	const reply = await postJson("/register", formData);
 	if (reply === null) {
 		alert("Could not reach the server. Please try again.");
-		return;
+		return false;
 	}
 
 	// response.ok is true for status codes 200-299 (we send 201 on success).
 	if (!reply.response.ok) {
 		alert("Registration failed: " + reply.result.message);
-		return;
+		return false;
 	}
 
 	alert("Registration successful! Welcome, " + reply.result.displayName);
@@ -142,7 +142,7 @@ async function submitLoginForm(event) {
 	let isValid = validatePassword("loginPassword");
 	isValid = validateUsername("loginUsername") && isValid;
 	if (!isValid) {
-		return;
+		return false;
 	}
 
 	const formData = {
@@ -153,7 +153,7 @@ async function submitLoginForm(event) {
 	const reply = await postJson("/login", formData);
 	if (reply === null) {
 		alert("Could not reach the server. Please try again.");
-		return;
+		return false;
 	}
 
 	if (reply.response.ok) {
@@ -162,7 +162,7 @@ async function submitLoginForm(event) {
 
 	if (!reply.response.ok) {
 		alert("Login failed: " + reply.result.message);
-		return;
+		return false;
 	}
 
 	alert("Login successful! Welcome back.");

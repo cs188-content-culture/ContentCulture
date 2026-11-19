@@ -16,5 +16,3 @@ CREATE TABLE dbo.Media (
   genre VARCHAR(50) NOT NULL,
   commentary VARCHAR(255) NOT NULL
 );
-
--- Driver={ODBC Driver 18 for SQL Server};Server=tcp:sql-server-cs188-mccarron-richie.database.windows.net,1433;Database=content-culture-prod;Uid=sql-server-admin;Pwd=CS188_fall_2026;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;
