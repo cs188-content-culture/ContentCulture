@@ -54,14 +54,14 @@ function validateUsername(id) {
 	return true;
 }
 
-function validateDisplayName(id) {
-	const displayName = document.getElementById(id);
+function validatedisplay_name(id) {
+	const display_name = document.getElementById(id);
 	// .trim() removes spaces from both ends, so "   " counts as empty.
-	if (displayName.value.trim() === "") {
-		setError(displayName, "Display name cannot be empty.");
+	if (display_name.value.trim() === "") {
+		setError(display_name, "Display name cannot be empty.");
 		return false;
 	}
-	setValid(displayName);
+	setValid(display_name);
 	return true;
 }
 
@@ -108,7 +108,7 @@ async function submitRegisterForm(event) {
 	// run once the password had already failed.
 	let isValid = validatePassword("registerPassword");
 	isValid = validateUsername("registerUsername") && isValid;
-	isValid = validateDisplayName("registerDisplayName") && isValid;
+	isValid = validatedisplay_name("registerdisplay_name") && isValid;
 	if (!isValid) {
 		return false;
 	}
@@ -117,7 +117,7 @@ async function submitRegisterForm(event) {
 	const formData = {
 		username: document.getElementById("registerUsername").value,
 		password: document.getElementById("registerPassword").value,
-		displayname: document.getElementById("registerDisplayName").value,
+		display_name: document.getElementById("registerdisplay_name").value,
 	};
 
 	const reply = await postJson("/register", formData);
@@ -132,7 +132,7 @@ async function submitRegisterForm(event) {
 		return false;
 	}
 
-	alert("Registration successful! Welcome, " + reply.result.displayName);
+	alert("Registration successful! Welcome, " + reply.result.display_name);
 	hideModal("registerModal");
 }
 

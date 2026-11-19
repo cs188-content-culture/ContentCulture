@@ -3,7 +3,7 @@ CREATE TABLE dbo.Users (
   userid INT IDENTITY(1,1) PRIMARY KEY,
   username VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(50) NOT NULL,
-  displayname VARCHAR(50) NOT NULL
+  display_name VARCHAR(50) NOT NULL
 );
 
 IF OBJECT_ID(N'dbo.Media', N'U') IS NULL

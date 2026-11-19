@@ -64,13 +64,13 @@ class Register(Resource):
     def post(self):
         data = get_json_body()
 
-        missing_field = find_missing_field(data, ("username", "password", "displayname"))
+        missing_field = find_missing_field(data, ("username", "password", "display_name"))
         if missing_field is not None:
             return {"message": f"Missing required field: {missing_field}"}, 400
 
         username = data["username"]
         password = data["password"]
-        display_name = data["displayname"].strip()
+        display_name = data["display_name"].strip()
 
         # Validate everything we can before touching the database.
         is_valid, message = validate_username(username)
@@ -96,7 +96,7 @@ class Register(Resource):
         if not db.add_user(username, hashed_password, display_name):
             return {"message": "Username already exists"}, 400
 
-        return {"message": "User created successfully", "displayName": display_name}, 201
+        return {"message": "User created successfully", "display_name": display_name}, 201
 
 class Login(Resource):
      def post(self):
@@ -125,7 +125,7 @@ class Login(Resource):
             return{"message": BAD_LOGIN_MESSAGE}, 401
 
         success_message = f"Welcome back, {display_name}!"
-        response = make_response({"message": success_message, "displayName": display_name}, 200)
+        response = make_response({"message": success_message, "display_name": display_name}, 200)
 
         return response
 
