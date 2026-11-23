@@ -158,7 +158,7 @@ async function submitLoginForm(event) {
 	}
 
 	if (reply.response.ok) {
-		window.location.replace("http://127.0.0.1:5000/");
+		window.location.replace("/");
 	}
 
 	if (!reply.response.ok) {
