@@ -54,14 +54,14 @@ function validateUsername(id) {
 	return true;
 }
 
-function validateDisplayName(id) {
-	const displayName = document.getElementById(id);
+function validatedisplay_name(id) {
+	const display_name = document.getElementById(id);
 	// .trim() removes spaces from both ends, so "   " counts as empty.
-	if (displayName.value.trim() === "") {
-		setError(displayName, "Display name cannot be empty.");
+	if (display_name.value.trim() === "") {
+		setError(display_name, "Display name cannot be empty.");
 		return false;
 	}
-	setValid(displayName);
+	setValid(display_name);
 	return true;
 }
 
@@ -108,31 +108,32 @@ async function submitRegisterForm(event) {
 	// run once the password had already failed.
 	let isValid = validatePassword("registerPassword");
 	isValid = validateUsername("registerUsername") && isValid;
-	isValid = validateDisplayName("registerDisplayName") && isValid;
+	isValid = validatedisplay_name("registerdisplay_name") && isValid;
 	if (!isValid) {
-		return;
+		return false;
+		return false;
 	}
 
 	// The keys here must match what the server reads in Register.post().
 	const formData = {
 		username: document.getElementById("registerUsername").value,
 		password: document.getElementById("registerPassword").value,
-		displayname: document.getElementById("registerDisplayName").value,
+		display_name: document.getElementById("registerdisplay_name").value,
 	};
 
 	const reply = await postJson("/register", formData);
 	if (reply === null) {
 		alert("Could not reach the server. Please try again.");
-		return;
+		return false;
 	}
 
 	// response.ok is true for status codes 200-299 (we send 201 on success).
 	if (!reply.response.ok) {
 		alert("Registration failed: " + reply.result.message);
-		return;
+		return false;
 	}
 
-	alert("Registration successful! Welcome, " + reply.result.displayName);
+	alert("Registration successful! Welcome, " + reply.result.display_name);
 	hideModal("registerModal");
 }
 
@@ -142,7 +143,7 @@ async function submitLoginForm(event) {
 	let isValid = validatePassword("loginPassword");
 	isValid = validateUsername("loginUsername") && isValid;
 	if (!isValid) {
-		return;
+		return false;
 	}
 
 	const formData = {
@@ -153,7 +154,7 @@ async function submitLoginForm(event) {
 	const reply = await postJson("/login", formData);
 	if (reply === null) {
 		alert("Could not reach the server. Please try again.");
-		return;
+		return false;
 	}
 
 	if (reply.response.ok) {
@@ -162,7 +163,7 @@ async function submitLoginForm(event) {
 
 	if (!reply.response.ok) {
 		alert("Login failed: " + reply.result.message);
-		return;
+		return false;
 	}
 
 	alert("Login successful! Welcome back.");
