@@ -22,12 +22,12 @@ createListForm.addEventListener("submit", function (event) {
     newCard.className = "col-md-4";
 
     newCard.innerHTML = `
-        <div class="media-card">
-            <h5></h5>
-            <p></p>
-            <p>0 items</p>
-        </div>
-    `;
+    <div class="media-card">
+        <span class="media-category">Empty List</span>
+        <h5></h5>
+        <p></p>
+        <p>0 items</p>
+    </div>`;
 
     // Add the user's text safely
     newCard.querySelector("h5").textContent = name;
@@ -43,4 +43,10 @@ createListForm.addEventListener("submit", function (event) {
 
     // Clear the form
     createListForm.reset();
+
+    // Show a success message
+    document.getElementById("listSuccess").classList.remove("d-none");
 });
+
+
+// Run this code when the form is deleted

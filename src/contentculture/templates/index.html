@@ -17,27 +17,7 @@
 
 <body>
   <!-- Navigation bar -->
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">Content Culture</a>
-
-      <div>
-        <!-- Open existing login modal -->
-        <button class="btn btn-outline-light me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
-          Log In
-        </button>
-
-        <!-- Open existing registration modal -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registerModal">
-          Register
-        </button>
-
-        <!-- Temporary navigation for user testing -->
-        <a href="{{ url_for('show_lists') }}" class="btn btn-primary">
-          View My Lists
-        </a>
-      </div>
-    </div>
+  {% include "navbar.html" %}
   </nav>
 
   <main class="container">

@@ -62,3 +62,31 @@ h1 {
     color: #ffffff;
     font-weight: bold;
 }
+
+/* Navigation links */
+.navbar .nav-link {
+    color: #b0b8c1 !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff !important;
+}
+
+/* Highlight the current page */
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    border-bottom: 2px solid #0d6efd;
+}
+
+/* Category labels on list cards */
+.media-category {
+    display: inline-block;
+    background-color: #394957;
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    margin-bottom: 8px;
+}

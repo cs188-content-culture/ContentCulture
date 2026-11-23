@@ -17,16 +17,7 @@
 <body>
 
     <!-- Navigation bar -->
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">Content Culture</a>
-
-            <div>
-                <a href="/" class="btn btn-outline-light me-2">Home</a>
-                <a href="/lists" class="btn btn-primary">My Lists</a>
-            </div>
-        </div>
-    </nav>
+    {% include "navbar.html" %}
 
     <!-- Main content -->
     <main class="container py-5">
@@ -47,11 +38,29 @@
             </button>
         </div>
 
+        <!-- Feedback message -->
+        <div id="mediaSuccess" class="alert alert-success d-none" role="status">
+            Media added! Changes won't be saved after refreshing.
+        </div>
+
+        <!-- Filter media by category -->
+        <div class="mb-4">
+            <label for="mediaFilter" class="form-label">Filter by Category</label>
+
+            <select id="mediaFilter" class="form-select w-auto">
+                <option value="All">All Media</option>
+                <option value="Movie">Movies</option>
+                <option value="TV Show">TV Shows</option>
+                <option value="Book">Books</option>
+                <option value="Game">Games</option>
+            </select>
+        </div>
+
         <!-- Media saved to this list -->
         <div class="row g-3" id="mediaContainer">
 
             {% for media in selected_list.media %}
-            <div class="col-md-4">
+            <div class="col-md-4" data-medium="{{ media.medium }}">
                 <div class="media-card">
                     <h5>{{ media.title }}</h5>
                     <p>{{ media.medium }}</p>

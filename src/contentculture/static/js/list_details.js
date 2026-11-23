@@ -17,6 +17,8 @@ addMediaForm.addEventListener("submit", function (event) {
     // Create a new column for the media card
     const column = document.createElement("div");
     column.className = "col-md-4";
+    // Store the media category for filtering
+    column.dataset.medium = medium;
 
     // Create the card
     const card = document.createElement("div");
@@ -45,6 +47,13 @@ addMediaForm.addEventListener("submit", function (event) {
     column.appendChild(card);
     mediaContainer.appendChild(column);
 
+    // Apply the selected filter to the new card
+    const selectedCategory = document.getElementById("mediaFilter").value;
+
+    if (selectedCategory !== "All" && medium !== selectedCategory) {
+        column.classList.add("d-none");
+    }
+
     // Update the number of items
     const count = mediaContainer.children.length;
     document.getElementById("mediaCount").textContent = count + " items";
@@ -52,8 +61,36 @@ addMediaForm.addEventListener("submit", function (event) {
     // Clear the form
     addMediaForm.reset();
 
+    // Show a success message
+    document.getElementById("mediaSuccess").classList.remove("d-none");
+
     // Close the popup
     const modalElement = document.getElementById("addMediaModal");
     const modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
+});
+
+// Find the media category filter
+const mediaFilter = document.getElementById("mediaFilter");
+
+// Filter the media cards when the user selects a category
+mediaFilter.addEventListener("change", function () {
+
+    // Get the selected category
+    const selectedCategory = mediaFilter.value;
+
+    // Find all media cards
+    const mediaCards = document.querySelectorAll("#mediaContainer > div");
+
+    // Check the category of each card
+    mediaCards.forEach(function (card) {
+
+        const medium = card.dataset.medium;
+
+        if (selectedCategory === "All" || medium === selectedCategory) {
+            card.classList.remove("d-none");
+        } else {
+            card.classList.add("d-none");
+        }
+    });
 });
