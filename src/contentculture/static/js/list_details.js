@@ -5,6 +5,12 @@ const movieSearchSection = document.getElementById("movieSearchSection");
 const mediaMedium = document.getElementById("mediaMedium");
 const mediaTitle = document.getElementById("mediaTitle");
 
+// Clear the selected result when the title changes
+mediaTitle.addEventListener("input", function () {
+    selectedMovie = null;
+    movieSearchResults.replaceChildren();
+});
+
 // Remember which TMDB movie was selected
 let selectedMovie = null;
 
@@ -109,7 +115,7 @@ searchMovieButton.addEventListener("click", async function () {
 
     } catch (error) {
         movieSearchResults.textContent =
-            "Could not search TMDB. Please try again.";
+            "Could not search for media. Please try again.";
         console.error(error);
     }
 });
