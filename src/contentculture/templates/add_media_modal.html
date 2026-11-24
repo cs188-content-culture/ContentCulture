@@ -16,6 +16,16 @@
                         <input type="text" class="form-control" id="mediaTitle" required>
                     </div>
 
+                    <!-- Search TMDB for movies and TV shows -->
+                    <div class="mb-3" id="movieSearchSection">
+                        <button type="button" class="btn btn-outline-primary" id="searchMovieButton">
+                            Search Movies
+                        </button>
+
+                        <!-- Matching results appear here -->
+                        <div id="movieSearchResults" class="mt-3"></div>
+                    </div>
+
                     <div class="mb-3">
                         <label for="mediaMedium" class="form-label">Medium</label>
                         <select class="form-select" id="mediaMedium">

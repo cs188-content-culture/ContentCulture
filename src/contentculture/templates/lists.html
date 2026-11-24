@@ -24,7 +24,13 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h1>My Lists</h1>
+                <h1>
+                    {% if display_name %}
+                    {{ display_name }}'s Lists
+                    {% else %}
+                    My Lists
+                    {% endif %}
+                </h1>
                 <p class="lead">
                     Organize your favorite movies, books, games, and TV shows.
                 </p>
@@ -38,49 +44,29 @@
 
         <!-- Feedback message -->
         <div id="listSuccess" class="alert alert-success d-none" role="status">
-            List added to preview! Won't be saved after refreshing.
+            List created successfully!
         </div>
 
         <!-- List cards -->
         <div class="row g-3" id="listsContainer">
 
+            {% for list in lists %}
             <div class="col-md-4">
-                <div class="media-card">
-                    <span class="media-category">Movies</span>
+                <a href="/lists/{{ list.id }}" class="text-decoration-none">
+                    <div class="media-card">
+                        <span class="media-category">My List</span>
 
-                    <h5>
-                        <a href="/lists/1">Favorite Horror Movies</a>
-                    </h5>
+                        <h5>{{ list.name }}</h5>
 
-                    <p>My favorite scary movies.</p>
-                    <p>3 items</p>
-                </div>
+                        <p>{{ list.description or "" }}</p>
+
+                        <p>View List</p>
+                    </div>
+                </a>
             </div>
-
-            <div class="col-md-4">
-                <div class="media-card">
-                    <span class="media-category">Games</span>
-                    <h5>
-                        <a href="/lists/2">Games I Want to Play</a>
-                    </h5>
-                    <p>Games on my wishlist.</p>
-                    <p>2 items</p>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="media-card">
-                    <span class="media-category">Books</span>
-                    <h5>
-                        <a href="/lists/3">Best Books of 2026</a>
-                    </h5>
-                    <p>Books I enjoyed this year.</p>
-                    <p>2 items</p>
-                </div>
-            </div>
+            {% endfor %}
 
         </div>
-
     </main>
 
     <!-- Create List popup -->

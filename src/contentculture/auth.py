@@ -7,7 +7,7 @@ Notice that there's no SQL in this file. Endpoints decide what should happen;
 the Database class in db.py does the talking to the database.
 """
 
-from flask import Flask, request, make_response
+from flask import Flask, request, session, make_response
 from flask_bcrypt import check_password_hash, generate_password_hash
 from flask_restful import Api, Resource
 
@@ -122,11 +122,15 @@ class Login(Resource):
         )
 
         if not valid:
-            return{"message": BAD_LOGIN_MESSAGE}, 401
-
+            return {"message": BAD_LOGIN_MESSAGE}, 401
+        # Remember the logged-in user
+        session.clear()
+        session["user_id"] = userid
+        session["display_name"] = display_name
         success_message = f"Welcome back, {display_name}!"
-        response = make_response({"message": success_message, "display_name": display_name}, 200)
-
+        response = make_response(
+            {"message": success_message, "display_name": display_name}, 200
+        )
         return response
 
 def setup_auth(app: Flask) -> None:

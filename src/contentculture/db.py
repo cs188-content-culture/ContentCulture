@@ -73,6 +73,151 @@ class Database:
             row = cursor.fetchone()
         return row if row else None
 
+    def add_list(self, user_id, name, description):
+        """Save a new list and return its ID."""
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """
+                INSERT INTO Lists (userid, title, description)
+                OUTPUT INSERTED.listid
+                VALUES (?, ?, ?)
+                """,
+                (user_id, name, description)
+            )
+
+            list_id = cursor.fetchone()[0]
+
+        self.connection.commit()
+        return list_id
+
+    def get_lists(self, user_id):
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT listid, title, description
+                FROM Lists
+                WHERE userid = ?
+                ORDER BY listid DESC
+                """,
+                (user_id,)
+            )
+            rows = cursor.fetchall()
+
+        return [
+            {
+                "id": row[0],
+                "name": row[1],
+                "description": row[2]
+            }
+            for row in rows
+        ]
+
+    def get_list(self, list_id, user_id):
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT listid, title, description
+                FROM Lists
+                WHERE listid = ? AND userid = ?
+                """,
+                (list_id, user_id)
+            )
+
+            row = cursor.fetchone()
+
+        if row is None:
+            return None
+
+        return {
+            "id": row[0],
+            "name": row[1],
+            "description": row[2],
+            "media": self.get_media(list_id, user_id)
+        }
+
+
+    def add_media(self, list_id, user_id, title, medium,
+              external_id, rating, commentary):
+        """Add media to a list owned by the user."""
+
+        with self.connection.cursor() as cursor:
+
+            # Check that the user owns this list
+            cursor.execute(
+                """
+                SELECT listid
+                FROM Lists
+                WHERE listid = ? AND userid = ?
+                """,
+                (list_id, user_id)
+            )
+
+            if cursor.fetchone() is None:
+                return None
+
+            try:
+                # Add the media to the Media table
+                cursor.execute(
+                    """
+                    INSERT INTO Media
+                        (userid, title, medium, rating, genre, commentary)
+                    OUTPUT INSERTED.mediaid
+                    VALUES (?, ?, ?, ?, ?, ?)
+                    """,
+                    (user_id, title, medium, rating, "Unknown", commentary)
+                )
+
+                media_id = cursor.fetchone()[0]
+
+                # Connect the media to the correct list
+                cursor.execute(
+                    """
+                    INSERT INTO ListItems (listid, mediaid)
+                    VALUES (?, ?)
+                    """,
+                    (list_id, media_id)
+                )
+
+                # Save both changes together
+                self.connection.commit()
+
+            except Exception:
+                self.connection.rollback()
+                raise
+
+        return media_id
+
+
+    def get_media(self, list_id, user_id):
+        """Get all media from a list owned by the user."""
+
+        with self.connection.cursor() as cursor:
+            cursor.execute(
+                """
+                SELECT Media.mediaid, Media.title, Media.medium,
+                    Media.rating, Media.commentary
+                FROM ListItems
+                JOIN Media ON ListItems.mediaid = Media.mediaid
+                JOIN Lists ON ListItems.listid = Lists.listid
+                WHERE Lists.listid = ? AND Lists.userid = ?
+                ORDER BY ListItems.ID DESC
+                """,
+                (list_id, user_id)
+            )
+
+            rows = cursor.fetchall()
+
+        return [
+            {
+                "id": row[0],
+                "title": row[1],
+                "medium": row[2],
+                "rating": row[3],
+                "commentary": row[4]
+            }
+            for row in rows
+        ]
+    
 def get_db() -> Database:
     """Return this request's Database, connecting on first use."""
     # `g` is Flask's per-request storage (remember it from the API activity?).

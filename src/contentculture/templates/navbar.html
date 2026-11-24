@@ -17,9 +17,19 @@
                 My Lists
             </a>
 
-            <!-- Account buttons only on homepage -->
-            {% if request.path == "/" %}
 
+            {% if session.get("user_id") %}
+
+            <!-- Buttons for logged-in users -->
+            <form action="/logout" method="POST" class="m-0">
+                <button type="submit" class="btn btn-outline-light btn-sm">
+                    Log Out
+                </button>
+            </form>
+
+            {% elif request.path == "/" %}
+
+            <!-- Buttons for visitors -->
             <button type="button" class="btn btn-outline-light btn-sm" data-bs-toggle="modal"
                 data-bs-target="#loginModal">
                 Log In

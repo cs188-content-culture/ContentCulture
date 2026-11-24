@@ -40,7 +40,7 @@
 
         <!-- Feedback message -->
         <div id="mediaSuccess" class="alert alert-success d-none" role="status">
-            Media added! Changes won't be saved after refreshing.
+            Media added successfully!
         </div>
 
         <!-- Filter media by category -->
@@ -57,7 +57,7 @@
         </div>
 
         <!-- Media saved to this list -->
-        <div class="row g-3" id="mediaContainer">
+        <div class="row g-3" id="mediaContainer" data-list-id="{{ selected_list.id }}">
 
             {% for media in selected_list.media %}
             <div class="col-md-4" data-medium="{{ media.medium }}">
