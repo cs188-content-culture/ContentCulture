@@ -3,6 +3,7 @@ const searchMovieButton = document.getElementById("searchMovieButton");
 const movieSearchResults = document.getElementById("movieSearchResults");
 const movieSearchSection = document.getElementById("movieSearchSection");
 const mediaMedium = document.getElementById("mediaMedium");
+const mediaGenre = document.getElementById("mediaGenre");
 const mediaTitle = document.getElementById("mediaTitle");
 
 // Clear the selected result when the title changes
@@ -131,6 +132,7 @@ addMediaForm.addEventListener("submit", async function (event) {
     // Get the information entered by the user
     const title = document.getElementById("mediaTitle").value;
     const medium = document.getElementById("mediaMedium").value;
+    const genre = document.getElementById("mediaGenre").value;
     const rating = document.getElementById("mediaRating").value;
     const commentary = document.getElementById("mediaCommentary").value;
 
@@ -166,6 +168,7 @@ addMediaForm.addEventListener("submit", async function (event) {
             body: JSON.stringify({
                 title: title,
                 medium: medium,
+                genre: genre,
                 external_id: externalId,
                 rating: Number(rating),
                 commentary: commentary
@@ -202,6 +205,9 @@ addMediaForm.addEventListener("submit", async function (event) {
     const mediumElement = document.createElement("p");
     mediumElement.textContent = medium;
 
+    const genreElement = document.createElement("p");
+    genreElement.textContent = genre;
+
     const ratingElement = document.createElement("p");
     ratingElement.textContent = "Rating: " + rating + "/5";
 
@@ -211,6 +217,7 @@ addMediaForm.addEventListener("submit", async function (event) {
     // Put everything inside the card
     card.appendChild(titleElement);
     card.appendChild(mediumElement);
+    card.appendChild(genreElement)
     card.appendChild(ratingElement);
     card.appendChild(commentaryElement);
 

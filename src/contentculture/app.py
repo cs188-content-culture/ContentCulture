@@ -161,6 +161,7 @@ def add_media_api(list_id):
 
     title = data.get("title")
     medium = data.get("medium")
+    genre = data.get("genre")
     external_id = data.get("external_id")
     rating = data.get("rating")
     commentary = data.get("commentary", "")
@@ -169,6 +170,9 @@ def add_media_api(list_id):
         return jsonify({"message": "Please enter a title."}), 400
 
     if medium not in ("Movie", "TV Show", "Book", "Game"):
+        return jsonify({"message": "Invalid media type."}), 400
+
+    if genre not in ("Comedy", "Romance", "Action", "Thriller", "Adventure", "Drama", "Crime", "Mystery", "Sci-Fi", "Fantasy", "Historical", "Non-Fiction", "Holiday"):
         return jsonify({"message": "Invalid media type."}), 400
 
     if type(rating) is not int or rating not in range(1, 6):
@@ -193,6 +197,7 @@ def add_media_api(list_id):
         user_id,
         title.strip(),
         medium,
+        genre,
         external_id,
         rating,
         commentary

@@ -136,8 +136,7 @@ class Database:
         }
 
 
-    def add_media(self, list_id, user_id, title, medium,
-              external_id, rating, commentary):
+    def add_media(self, list_id, user_id, title, medium, genre, external_id, rating, commentary):
         """Add media to a list owned by the user."""
 
         with self.connection.cursor() as cursor:
@@ -164,7 +163,7 @@ class Database:
                     OUTPUT INSERTED.mediaid
                     VALUES (?, ?, ?, ?, ?, ?)
                     """,
-                    (user_id, title, medium, rating, "Unknown", commentary)
+                    (user_id, title, medium, rating, genre, commentary)
                 )
 
                 media_id = cursor.fetchone()[0]
@@ -194,7 +193,7 @@ class Database:
         with self.connection.cursor() as cursor:
             cursor.execute(
                 """
-                SELECT Media.mediaid, Media.title, Media.medium,
+                SELECT Media.mediaid, Media.title, Media.medium, Media.genre,
                     Media.rating, Media.commentary
                 FROM ListItems
                 JOIN Media ON ListItems.mediaid = Media.mediaid
@@ -212,8 +211,9 @@ class Database:
                 "id": row[0],
                 "title": row[1],
                 "medium": row[2],
-                "rating": row[3],
-                "commentary": row[4]
+                "genre" : row[3],
+                "rating": row[4],
+                "commentary": row[5]
             }
             for row in rows
         ]

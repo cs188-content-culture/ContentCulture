@@ -7,6 +7,7 @@ Endpoints:
         id: int
         title: string
         medium: string
+        genre: string
         external_id: string
         rating: int
         genre: string
